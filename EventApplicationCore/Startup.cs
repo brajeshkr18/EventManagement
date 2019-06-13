@@ -12,6 +12,7 @@ using EventApplicationCore.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Features;
 using EventApplicationCore.Filters;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace EventApplicationCore
 {
@@ -34,6 +35,9 @@ namespace EventApplicationCore
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            var manager = new ApplicationPartManager();
+            manager.ApplicationParts.Add(new AssemblyPart(typeof(Startup).Assembly));
+            services.AddSingleton(manager);
             services.AddMvc(options =>
             {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
