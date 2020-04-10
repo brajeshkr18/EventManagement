@@ -39,6 +39,9 @@ namespace EventApplicationCore
 
             services.AddSingleton(manager);
             // Add framework services.
+            var manager = new ApplicationPartManager();
+            manager.ApplicationParts.Add(new AssemblyPart(typeof(Startup).Assembly));
+            services.AddSingleton(manager);
             services.AddMvc(options =>
             {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
