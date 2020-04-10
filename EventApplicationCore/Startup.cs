@@ -12,6 +12,7 @@ using EventApplicationCore.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Features;
 using EventApplicationCore.Filters;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace EventApplicationCore
 {
@@ -33,6 +34,10 @@ namespace EventApplicationCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var manager = new ApplicationPartManager();
+            manager.ApplicationParts.Add(new AssemblyPart(typeof(Startup).Assembly));
+
+            services.AddSingleton(manager);
             // Add framework services.
             services.AddMvc(options =>
             {
